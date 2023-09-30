@@ -1,5 +1,14 @@
 package main
 
+import (
+	"fmt"
+
+	"golang.org/x/example/stringutil"
+)
+
+// Инвертирование строки с использованием стороннего модуля.
 func main() {
-	// Place your code here.
+	const source = "Hello, OTUS!"
+	result := stringutil.Reverse(source)
+	fmt.Println(result)
 }
