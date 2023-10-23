@@ -12,8 +12,8 @@ type Counter struct {
 }
 
 var (
-	startPunctuations = regexp.MustCompile(`^(\.|,|<|\/|:|!|>|-|;)+`)
-	endPunctuations   = regexp.MustCompile(`(\.|,|<|\/|:|!|>|-|;)+$`)
+	startPunctuations = regexp.MustCompile(`^[\p{Po}\p{Pi}]+`)
+	endPunctuations   = regexp.MustCompile(`[\p{Po}\p{Pf}\p{Pd}]+$`)
 )
 
 func substitute(in string) string {
