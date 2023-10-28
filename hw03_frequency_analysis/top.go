@@ -11,14 +11,10 @@ type Counter struct {
 	count int
 }
 
-var (
-	startPunctuations = regexp.MustCompile(`^[\p{Po}\p{Pi}]+`)
-	endPunctuations   = regexp.MustCompile(`[\p{Po}\p{Pf}\p{Pd}]+$`)
-)
+var wordOnly = regexp.MustCompile(`\p{L}+.*\p{L}+|\p{L}+|^[\p{P}\p{S}]{2,}$`)
 
-func substitute(in string) string {
-	out := startPunctuations.ReplaceAllString(in, "")
-	out = endPunctuations.ReplaceAllString(out, "")
+func substitute2(in string) string {
+	out := wordOnly.FindString(in)
 	out = strings.ToLower(out)
 	return out
 }
@@ -27,7 +23,7 @@ func Top10(text string) []string {
 	words := strings.Fields(text)
 	table := make(map[string]int, 10)
 	for _, w := range words {
-		key := substitute(w)
+		key := substitute2(w)
 		if key == "" {
 			continue
 		}

@@ -43,7 +43,17 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+var strangeSimbolsText = `»Es ist möglich«
+»»И«« «»двойные;$ и---- э-%-э 
+- --- $#%!&!!*`
+
 func TestTop10(t *testing.T) {
+	t.Run("Strange simbol", func(t *testing.T) {
+		expected := []string{
+			"и", "$#%!&!!*", "---", "es", "ist", "möglich", "двойные", "э-%-э",
+		}
+		require.Equal(t, expected, Top10(strangeSimbolsText))
+	})
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
 	})
