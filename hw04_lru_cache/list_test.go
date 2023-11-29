@@ -15,6 +15,19 @@ func TestList(t *testing.T) {
 		require.Nil(t, l.Back())
 	})
 
+	t.Run("near empty", func(t *testing.T) {
+		l := NewList()
+		l.PushBack(15.0)
+		require.Equal(t, l.Back(), l.Front())
+		l.PushBack(15.0)
+		require.NotEqual(t, l.Back(), l.Front())
+		require.Equal(t, l.Back().Value, l.Front().Value)
+		l.Remove(l.Front())
+		l.Remove(l.Front())
+		require.Nil(t, l.Back())
+		require.Nil(t, l.Front())
+	})
+
 	t.Run("complex", func(t *testing.T) {
 		l := NewList()
 
