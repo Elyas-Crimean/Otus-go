@@ -14,6 +14,8 @@ type EnvValue struct {
 	NeedRemove bool
 }
 
+var errUnsupported = errors.New("для описания переменных окружения поддерживаются только обычные файлы")
+
 // ReadDir reads a specified directory and returns map of env variables.
 // Variables represented as files where filename is name of variable, file first line is a value.
 func ReadDir(dir string) (Environment, error) {
@@ -24,7 +26,7 @@ func ReadDir(dir string) (Environment, error) {
 	env := make(Environment)
 	for _, entry := range dirEntryes {
 		if !entry.Type().IsRegular() {
-			return nil, errors.ErrUnsupported
+			return nil, errUnsupported
 		}
 		content, err := os.ReadFile(dir + string(os.PathSeparator) + entry.Name())
 		if err != nil {
