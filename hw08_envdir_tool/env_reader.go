@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"strings"
 )
@@ -23,11 +24,11 @@ func ReadDir(dir string) (Environment, error) {
 	env := make(Environment)
 	for _, entry := range dirEntryes {
 		if !entry.Type().IsRegular() {
-			continue
+			return nil, errors.ErrUnsupported
 		}
 		content, err := os.ReadFile(dir + string(os.PathSeparator) + entry.Name())
 		if err != nil {
-			continue
+			return nil, err
 		}
 		if len(content) == 0 {
 			env[entry.Name()] = EnvValue{NeedRemove: true}
