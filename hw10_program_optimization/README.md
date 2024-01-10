@@ -1,3 +1,23 @@
+## Результат на моём компьютере:
+Время выполнения: 27% от исходного
+
+Использование памяти: 1.7% от исходного
+
+по 
+```
+go test -v -count=1 -timeout=30s -tags bench .
+```
+исходный:
+```
+    stats_optimization_test.go:46: time used: 349.121177ms / 300ms
+    stats_optimization_test.go:47: memory used: 308Mb / 30Mb
+```
+после правок:
+```
+    stats_optimization_test.go:46: time used: 93.079699ms / 300ms
+    stats_optimization_test.go:47: memory used: 5Mb / 30Mb
+```
+
 ## Домашнее задание №10 «Оптимизация программы»
 
 Вам дан исходный код функции `GetDomainStat(r io.Reader, domain string)`, которая:
