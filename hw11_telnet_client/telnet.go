@@ -12,6 +12,9 @@ type TelnetClient interface {
 	Send() error
 	Receive() error
 }
+
+const maxSendLength = 260
+
 type tcImpl struct {
 	address string
 	timeout time.Duration
@@ -20,9 +23,9 @@ type tcImpl struct {
 	conn    net.Conn
 }
 
-func NewTelnetClient(address string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
+func NewTelnetClient(host string, timeout time.Duration, in io.ReadCloser, out io.Writer) TelnetClient {
 	return &tcImpl{
-		address: address,
+		address: host,
 		timeout: timeout,
 		in:      in,
 		out:     out,
@@ -45,7 +48,7 @@ func (tc *tcImpl) Receive() error {
 }
 
 func (tc *tcImpl) Send() error {
-	_, err := io.Copy(tc.conn, tc.in)
+	_, err := io.CopyN(tc.conn, tc.in, maxSendLength)
 	return err
 }
 

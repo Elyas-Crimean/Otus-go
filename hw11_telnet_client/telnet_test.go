@@ -35,7 +35,7 @@ func TestTelnetClient(t *testing.T) {
 
 			in.WriteString("hello\n")
 			err = client.Send()
-			require.NoError(t, err)
+			require.ErrorIs(t, err, io.EOF)
 
 			err = client.Receive()
 			require.NoError(t, err)
